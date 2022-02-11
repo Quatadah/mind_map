@@ -1,52 +1,72 @@
-    
-    let root = document.getElementById("root")  
-    let rectangle = document.getElementsByClassName("rectangle")[0];
-    let child = document.getElementsByTagName("li")[0];
-    let container = document.getElementById("container");
-    let popin = document.getElementById("popin");
 
-    const canvas = document.getElementById("canvas");
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-    const ctx = canvas.getContext('2d');
-    ctx.strokeStyle = 'rgb(212, 114, 106)';
-    ctx.lineWidth = 3;    
+const root = document.getElementById("root")  
+let rectangle = document.getElementsByClassName("rectangle")[0];
+let child = document.getElementsByTagName("li")[0];
+const container = document.getElementById("container");
+const popin = document.getElementById("popin");
+let childCounter = 1;
+
+const blue = "#2781CA";
+const green = "#76FF76";
+const red = "#E94A4A";
+const yellow = "#E2E276";
+
+
+const canvas = document.getElementById("canvas");
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+const ctx = canvas.getContext('2d');
+ctx.strokeStyle = 'rgb(212, 114, 106)';
+ctx.lineWidth = 3;    
     
+let tree = {
+    node: root,
+    children:[]
+}
     
-    let tree = {
-        node: root,
-        children:[]
-    }
-    
-    function findParent(element, tree){
-        if (element == tree.node)
-            return tree
-        else{
-            for (child of tree.children){
-                findParent(element, child);                
-                if (child.node == element)
-                    return child;                    
-            }
-        }
-        return null;
-    }
-    function isLeaf(element){
-        return element.children.length == 0;
-    }
-    function findSiblings(element, tree){
-        if(tree.children.includes(element)){
-            return tree.children;
-        }
+function findParent(element, tree){
+    if (element == tree.node)
+        return tree
+    else{
         for (child of tree.children){
-            console.log(child.children);
-            return findSiblings(element, child);
-        }        
-        return null;    
+            findParent(element, child);                
+            if (child.node == element)
+                return child;                    
+        }
     }
+    return null;
+}
+
+function isLeaf(element){
+    return element.children.length == 0;
+}
+
+function findSiblings(element, tree){
+    for (child of tree.children){
+        if (child.node == element.node && child.children == element.children){
+            tree.children = tree.children.filter(function (ele) {
+                return ele.node != child.node && ele.children != child.children;
+            });
+            return true;
+        }
+    }
+    for (child of tree.children){
+        findSiblings(element, child);
+        if (child.node == element.node && child.children == element.children){
+            tree.children = tree.children.filter(function (ele) {
+                return ele.node != child.node && ele.children != child.children;
+            });
+            return true;
+        }
+    }       
+    return false;    
+}
+
     function getChildren(element){  
         return element.children;
     }
-    let childCounter = 1;
+
+    
 
     function addChild(elem){
         childCounter++;
@@ -74,7 +94,7 @@
         let elementRoot = findParent(elem.parentNode, tree);
         let toBePushed = {node: newRectangle, children: []};
         elementRoot.children.push(toBePushed);
-
+        
         if(elementRoot.children.length == 3){            
             elem.style.visibility = 'hidden';
         }
@@ -90,7 +110,6 @@
         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawTree(tree);
-        //console.log(tree);
        }
 
     function drawTree(tree){
@@ -136,10 +155,7 @@
     }
 
 
-    window.onresize = () =>{
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawTree(tree);
-    }
+    
 
 let selectedRectangle = undefined;
 let radius = document.getElementById("radius");
@@ -178,10 +194,6 @@ function coloriseRectangle(color){
     }
 }
 
-let blue = "#2781CA";
-let green = "#76FF76";
-let red = "#E94A4A";
-let yellow = "#E2E276";
 
 function applyColor(elem){
     switch(elem.attributes.id.value){
@@ -203,10 +215,31 @@ function applyColor(elem){
 
 function removChild(){
     if(selectedRectangle != undefined){
-        //selectedRectangle.remove();
-        let siblings = findSiblings(selectedRectangle, tree);
+        childCounter--;
+        let rec = {node: selectedRectangle, children: findParent(selectedRectangle, tree).children};
+        selectedRectangle.remove();
+        let siblings = findSiblings(rec, tree);                        
         console.log(siblings);
-        //ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //drawTree(tree);
+        checkButtons(tree);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawTree(tree);
+        
     }
+}
+
+function checkButtons(tree){
+        if(tree.children.length < 3){
+            tree.node.children[1].style.visibility = 'visible';
+        }
+        for(child of tree.children){
+            checkButtons(child);
+            if(tree.children.length < 3){
+                tree.node.children[1].style.visibility = 'visible';
+            }
+        }    
+}
+
+window.onresize = () =>{
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawTree(tree);
 }
