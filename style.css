@@ -24,19 +24,34 @@ body{
     left: 0;
     
 }
-.subcontainer{
+
+.tree{
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    align-items: center;
     height: 100%;
     width: 100%;
 }
+li{
+    display: block;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+.nested{
+    display: flex;
+    flex-direction: column;
+
+    
+}
 
 .rectangle{    
+    margin-top: 10px;
+    margin-bottom: 10px;
     z-index: 1;
     background-color: #2d2d2d;
-    height: 5%;
-    width: 10%;
+    height: 50px;
+    width: 200px;
     border: 3px solid rgb(212, 114, 106);
     border-radius: 10px;
 }
