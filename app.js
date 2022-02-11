@@ -1,6 +1,6 @@
 
     let container = document.getElementById("container");
-    let root = document.getElementById("root")
+    let root = document.getElementById("root")  
     let rectangle = document.getElementsByClassName("rectangle")[0];
     let child = document.getElementsByTagName("li")[0];
     let button = document.getElementsByClassName("btn")[0];
@@ -65,9 +65,8 @@
         let elementRoot = findParent(elem.parentNode, tree);
         let toBePushed = {node: newRectangle, children: []};
         elementRoot.children.push(toBePushed);
-        //console.log(elementRoot.children.size);
-        if(elementRoot.children.size == 3){
-            
+
+        if(elementRoot.children.length == 3){            
             elem.style.visibility = 'hidden';
         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -103,7 +102,7 @@
         const off1 = getOffset(node);
         const off2 = getOffset(child.node);
 
-        const x1 = off1.left + off1.width - 5;
+        const x1 = off1.left + off1.width - 8;
         const y1 = off1.top + off1.height/2 - 5;
       
         const x2 = off2.left;

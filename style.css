@@ -50,21 +50,51 @@ li{
     margin-bottom: 10px;
     z-index: 1;
     background-color: #2d2d2d;
-    height: 50px;
-    width: 200px;
+    height: 70px;
+    width: 250px;
     border: 3px solid rgb(212, 114, 106);
     border-radius: 10px;
 }
 
 .btn{
-    color: white;
-    background-color: #2d2d2d;
+    padding: 12px;
+    color: 2d2d2d;
+    background-color: white;
     border: 3px solid rgb(212, 114, 106);
     border-radius: 100%;
     position: relative;
-    left: 93%;
-    top: 30%;
+    left: 10%;
+    top: 20%;
+    
+    
 }
 .btn:hover{
     cursor: pointer;
+}
+
+.title{
+    font-size:x-large;
+    font-weight: bold;
+    z-index: -1;
+    position: relative;
+    color:white;
+    bottom: 50px;
+    text-align: center;
+}
+
+span{
+    font-weight: bold;
+}
+
+input{
+    position: relative;
+    top: 15px;
+    left: 20px;
+    background-color: #2d2d2d;
+    color:white;
+    height: 30px;
+    font-size: large;
+    width: 200px;
+    border: none;
+    text-align: center;
 }
