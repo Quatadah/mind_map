@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>JavaScript - Drawing a Line</h1>
+
+    <canvas id="canvas" height="400" width="500">
+    </canvas>
+    <script>
+        function draw(x1, y1, x2, y2) {
+    const canvas = document.querySelector('#canvas');
+
+    if (!canvas.getContext) {
+        return;
+    }
+    const ctx = canvas.getContext('2d');
+
+    // set line stroke and line width
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 5;
+
+    // draw a red line
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+
+}
+draw(100, 100, 300, 100);
+
+    </script>
+
+</body>
+</html>
