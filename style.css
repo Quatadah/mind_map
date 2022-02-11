@@ -1,13 +1,25 @@
+@font-face {
+    font-family: "Rowdies";
+    src: url("./fonts/Rowdies-Bold.ttf");
+}
+
+
 html, body{
+    width: 100%;
     height: 100%;
+    font-family: "Rowdies";
 }
 body{
     background-color: #3f3f3f;
+    overflow: scroll;
+    
 }
 
 #container{
     position: relative;
     height: 100%;
+    max-height: 1000%;
+    max-width: 1000%;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -16,8 +28,10 @@ body{
 }
 
 /*#canvas { position:absolute; top:0; left:0; z-index:0; height: 100%; width: 100%; }*/
-#canvas{
-    
+#canvas{    
+    max-width: 1000%;
+    max-height: 1000%;
+    overflow: scroll;
     z-index: -1;
     position:absolute;
     top: 0;
@@ -31,27 +45,28 @@ body{
     align-items: center;
     height: 100%;
     width: 100%;
+    max-height: 200%;
+    max-width: 200%;
 }
 li{
     display: block;
     display: flex;
     justify-content: left;
     align-items: center;
+    
+    
 }
 .nested{
     display: flex;
-    flex-direction: column;
-
-    
+    flex-direction: column;    
 }
 
-.rectangle{    
-    margin-top: 10px;
-    margin-bottom: 10px;
+.rectangle{        
+    margin: 10px;
     z-index: 1;
-    background-color: #2d2d2d;
+    background-color: #2d2d2d;    
     height: 70px;
-    width: 250px;
+    width: 250px;    
     border: 3px solid rgb(212, 114, 106);
     border-radius: 10px;
 }
@@ -86,7 +101,9 @@ span{
     font-weight: bold;
 }
 
-input{
+#rec-input{
+    font-family: "Rowdies";
+    overflow: hidden;
     position: relative;
     top: 15px;
     left: 20px;
@@ -97,4 +114,147 @@ input{
     width: 200px;
     border: none;
     text-align: center;
+}
+
+#popin{
+    position: absolute;
+    bottom: 50px;
+    left: 30px;
+    height: 350px;
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;  
+    background-color: rgba(151, 147, 147, 0.52);  
+}
+
+#popin-title{
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    font-size: large;
+    font-weight: bold;
+    width: 100%;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    background-color: #2d2d2d;
+    color: white;
+    text-align: center;
+}
+
+#bodyy{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+}
+
+h2{
+    color:white;
+}
+
+
+.color{
+    height: 50px;
+    width: 50px;    
+    margin: -20px 10px 0px 10px;
+    border-radius: 10px;
+    position: relative;
+    right: 20px;
+    
+}
+#red{
+    background-color: rgb(233, 74, 74);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+#yellow{
+    background-color: rgb(226, 226, 118);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+#green{
+    background-color: rgb(118, 255, 118);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+#blue{
+    background-color: rgb(39, 129, 202);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+#color-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#popin-input{
+    font-size: large;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    background-color: #3f3f3f;
+    border: none;
+    margin-top: 20px;
+    height: 40px;
+    width: 220px;
+}
+#radius-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.radius-ele{
+    position: relative;
+    right: 20px;
+    margin-top: -20px;
+}
+
+#radius{        
+    padding-top: 10px;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    background-color: #2d2d2d;
+    color: white;
+    border-radius: 10px;
+}
+.radius-ele{
+    position: relative;
+    bottom: 20px;
+    font-size: large;
+    margin: 0px 10px 0 10px;
+}   
+
+.clickable{
+    font-size: xx-large;
+}
+
+.clickable:hover{
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.clickable:focus{
+    opacity: 0.5;
+}
+
+#top{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img{
+    width: 25px;
+    height: 25px;
+    position: relative;
+    left: 40px;
+    top: 5px;
+    
 }

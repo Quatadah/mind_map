@@ -1,25 +1,23 @@
-
-    let container = document.getElementById("container");
+    
     let root = document.getElementById("root")  
     let rectangle = document.getElementsByClassName("rectangle")[0];
     let child = document.getElementsByTagName("li")[0];
-    let button = document.getElementsByClassName("btn")[0];
+    let container = document.getElementById("container");
+    let popin = document.getElementById("popin");
 
     const canvas = document.getElementById("canvas");
-        canvas.height = window.innerHeight;
-        canvas.width = window.innerWidth;
-        const ctx = canvas.getContext('2d');
-        ctx.strokeStyle = 'rgb(212, 114, 106)';
-        ctx.lineWidth = 3;
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    const ctx = canvas.getContext('2d');
+    ctx.strokeStyle = 'rgb(212, 114, 106)';
+    ctx.lineWidth = 3;    
     
-
-    let lines = [];
     
     let tree = {
         node: root,
         children:[]
     }
-
+    
     function findParent(element, tree){
         if (element == tree.node)
             return tree
@@ -35,13 +33,24 @@
     function isLeaf(element){
         return element.children.length == 0;
     }
-
+    function findSiblings(element, tree){
+        if(tree.children.includes(element)){
+            return tree.children;
+        }
+        for (child of tree.children){
+            console.log(child.children);
+            return findSiblings(element, child);
+        }        
+        return null;    
+    }
     function getChildren(element){  
         return element.children;
     }
-    let childCounter = 0;
+    let childCounter = 1;
 
     function addChild(elem){
+        childCounter++;
+        
         const currentRectangle = elem.parentNode;
         const newRectangle = currentRectangle.cloneNode(true);
         let nested = undefined;
@@ -69,8 +78,19 @@
         if(elementRoot.children.length == 3){            
             elem.style.visibility = 'hidden';
         }
+        if (childCounter > 20){
+            container.style.width = "200%";
+            container.style.height = "200%";
+            canvas.height = window.innerHeight * 2;
+            canvas.width = window.innerWidth * 2;
+            ctx.strokeStyle = 'rgb(212, 114, 106)';
+            ctx.lineWidth = 3;
+            popin.style.top = "100px";
+            popin.style.left = "600px";
+        }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawTree(tree);
+        //console.log(tree);
        }
 
     function drawTree(tree){
@@ -81,12 +101,6 @@
             drawTree(child);
         }
     }            
-    /*
-    function draw(lines){
-        for(let i = 0; i < lines.length; i++){
-            drawLine(lines[i]);
-        }
-    }*/
 
     function drawLine(node, child){
         
@@ -110,16 +124,89 @@
 
         ctx.beginPath();
         ctx.moveTo(x1, y1);
+        ctx.lineTo(x1 + 30, y1);
+
+        ctx.moveTo(x1 + 30, y1);
+        ctx.lineTo(x1 + 30, y2);
+
+        ctx.moveTo(x1 + 30, y2);
         ctx.lineTo(x2, y2);    
         ctx.stroke();
         
     }
 
-    /*
-    function drawLine(line) {        
-        ctx.beginPath();
-        ctx.moveTo(line.x1, line.y1);
-        ctx.lineTo(line.x2, line.y2);    
-        ctx.stroke();
+
+    window.onresize = () =>{
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawTree(tree);
     }
-    */
+
+let selectedRectangle = undefined;
+let radius = document.getElementById("radius");
+
+function reduceRadius(){
+    radius.innerText = parseInt(radius.innerText) - 1;
+    if(selectedRectangle != undefined){
+        selectedRectangle.style.borderRadius = radius.innerText + "px";
+    }    
+}
+
+function addRadius(){
+    radius.innerText = parseInt(radius.innerText) + 1;
+    if(selectedRectangle != undefined){
+        selectedRectangle.style.borderRadius = radius.innerText + "px";
+    }
+}
+
+function copyTitle(elem){
+    if(selectedRectangle != undefined){
+        selectedRectangle.children[0].value = elem.value;
+    }
+    
+}
+
+function saveRectangle(elem){   
+    selectedRectangle = elem;
+}
+
+function coloriseRectangle(color){
+    if (selectedRectangle != undefined){
+        selectedRectangle.style.borderColor = color;
+        selectedRectangle.children[1].style.borderColor = color;
+    }else{
+        alert("No Node selected");
+    }
+}
+
+let blue = "#2781CA";
+let green = "#76FF76";
+let red = "#E94A4A";
+let yellow = "#E2E276";
+
+function applyColor(elem){
+    switch(elem.attributes.id.value){
+        case 'blue':
+            coloriseRectangle(blue);
+            break;
+        case 'red':
+            coloriseRectangle(red);
+            break;
+        case 'green':
+            coloriseRectangle(green);
+            break;
+        case 'yellow':
+            coloriseRectangle(yellow);
+            break;
+    }
+    
+}
+
+function removChild(){
+    if(selectedRectangle != undefined){
+        //selectedRectangle.remove();
+        let siblings = findSiblings(selectedRectangle, tree);
+        console.log(siblings);
+        //ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //drawTree(tree);
+    }
+}
