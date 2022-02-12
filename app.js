@@ -41,7 +41,7 @@ function isLeaf(element){
     return element.children.length == 0;
 }
 
-function findSiblings(element, tree){
+function removeElementFromTree(element, tree){
     for (child of tree.children){
         if (child.node == element.node && child.children == element.children){
             tree.children = tree.children.filter(function (ele) {
@@ -51,7 +51,7 @@ function findSiblings(element, tree){
         }
     }
     for (child of tree.children){
-        findSiblings(element, child);
+        removeElementFromTree(element, child);
         if (child.node == element.node && child.children == element.children){
             tree.children = tree.children.filter(function (ele) {
                 return ele.node != child.node && ele.children != child.children;
@@ -217,9 +217,13 @@ function removChild(){
     if(selectedRectangle != undefined){
         childCounter--;
         let rec = {node: selectedRectangle, children: findParent(selectedRectangle, tree).children};
+        if(selectedRectangle.nextSibling != null)
+            selectedRectangle.nextSibling.remove();
         selectedRectangle.remove();
-        let siblings = findSiblings(rec, tree);                        
-        console.log(siblings);
+        removeElementFromTree(rec, tree);   
+        
+
+
         checkButtons(tree);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawTree(tree);
