@@ -1,3 +1,3 @@
 # mind_map
 
-LIVE : https://www.mindyourmap.vercel.app
+LIVE : https://mindyourmap.vercel.app/
